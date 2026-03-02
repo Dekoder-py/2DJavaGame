@@ -60,7 +60,7 @@ public class Player extends Entity {
 
     public void draw(Graphics2D g2) {
 
-        BufferedImage image = null;
+        BufferedImage image;
 
         // TODO: add more sprite states (up1, up2, down1, down2, left1 ...) and use switch statement to set sprite; see: https://youtu.be/wT9uNGzMEM4
         // switch (direction) {}
