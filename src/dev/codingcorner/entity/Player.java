@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Player extends Entity {
     GamePanel gp;
@@ -32,7 +33,7 @@ public class Player extends Entity {
     public void getPlayerImage() {
         try {
             // TODO: add more sprite states (up1, up2, down1, down2, left1 ...) and load them as the names over there <-- also, video: https://youtu.be/wT9uNGzMEM4
-            sprite = ImageIO.read(getClass().getResourceAsStream("/player/player.png"));
+            sprite = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/player.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
