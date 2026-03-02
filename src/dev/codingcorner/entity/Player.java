@@ -31,9 +31,16 @@ public class Player extends Entity {
     }
 
     public void getPlayerImage() {
+
         try {
-            // TODO: add more sprite states (up1, up2, down1, down2, left1 ...) and load them as the names over there <-- also, video: https://youtu.be/wT9uNGzMEM4
-            sprite = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/player.png")));
+            down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/down1.png")));
+            down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/down2.png")));
+//            up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/up_1.png")));
+//            up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/up_2.png")));
+//            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left_1.png")));
+//            left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left_2.png")));
+//            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right_1.png")));
+//            right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right_2.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,16 +64,57 @@ public class Player extends Entity {
             x += speed;
             direction = "right";
         }
+
+        if (keyH.upPressed || keyH.downPressed || keyH.rightPressed || keyH.leftPressed)
+            spriteCounter++;
+
+        if (spriteCounter > 12) {
+            if (spriteNum == 1)
+                spriteNum = 2;
+            else if (spriteNum == 2)
+                spriteNum = 1;
+            spriteCounter = 0;
+        }
     }
 
     public void draw(Graphics2D g2) {
 
-        BufferedImage image;
+        BufferedImage image = null;
 
-        // TODO: add more sprite states (up1, up2, down1, down2, left1 ...) and use switch statement to set sprite; see: https://youtu.be/wT9uNGzMEM4
-        // switch (direction) {}
-
-        image = sprite;
+        switch (direction) {
+            case "down":
+                if (spriteNum == 1) {
+                    image = down1;
+                }
+                if (spriteNum == 2) {
+                    image = down2;
+                }
+                break;
+            case "up":
+                if (spriteNum == 1) {
+                    image = up1;
+                }
+                if (spriteNum == 2) {
+                    image = up2;
+                }
+                break;
+            case "left":
+                if (spriteNum == 1) {
+                    image = left1;
+                }
+                if (spriteNum == 2) {
+                    image = left2;
+                }
+                break;
+            case "right":
+                if (spriteNum == 1) {
+                    image = right1;
+                }
+                if (spriteNum == 2) {
+                    image = right2;
+                }
+                break;
+        }
         g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
     }
 }
