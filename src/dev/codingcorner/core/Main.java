@@ -3,6 +3,7 @@ package dev.codingcorner.core;
 import javax.swing.JFrame;
 
 public class Main {
+
     public static String WINDOW_TITLE = "2D Adventure";
 
     public static void main(String[] args) {
