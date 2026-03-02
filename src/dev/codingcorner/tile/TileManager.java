@@ -40,11 +40,7 @@ public class TileManager {
 
     public void draw(Graphics2D g2) {
 
-        for (int x = 0; x < gp.maxScreenCol; x++) {
-            for (int y = 0; y < gp.maxScreenRow; y++) {
-                g2.drawImage(tiles[0].image, gp.tileSize * x, gp.tileSize * y, gp.tileSize, gp.tileSize, null);
-            }
-        }
+        int col = 0;
 
     }
 }
