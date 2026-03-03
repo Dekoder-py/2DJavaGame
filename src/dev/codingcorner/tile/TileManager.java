@@ -86,7 +86,6 @@ public class TileManager {
                         try {
                             num = Integer.parseInt(numbers[col]);
                         } catch (NumberFormatException ignored) {
-                            num = defaultTile;
                         }
                     }
 
