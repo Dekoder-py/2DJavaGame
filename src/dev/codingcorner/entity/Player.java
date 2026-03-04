@@ -41,6 +41,7 @@ public class Player extends Entity {
         try {
             down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/down1.png")));
             down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/down2.png")));
+            down3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/down3.png")));
             up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/up1.png")));
             up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/up2.png")));
             up3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/up3.png")));
@@ -98,6 +99,9 @@ public class Player extends Entity {
                 if (spriteNum == 2) {
                     image = down2;
                 }
+                if (spriteNum == 3) {
+                    image = down3;
+                }
                 break;
             case "up":
                 if (spriteNum == 1) {
@@ -117,6 +121,9 @@ public class Player extends Entity {
                 if (spriteNum == 2) {
                     image = left2;
                 }
+                if (spriteNum == 3) {
+                    image = left3;
+                }
                 break;
             case "right":
                 if (spriteNum == 1) {
@@ -124,6 +131,9 @@ public class Player extends Entity {
                 }
                 if (spriteNum == 2) {
                     image = right2;
+                }
+                if (spriteNum == 3) {
+                    image = right3;
                 }
                 break;
         }
