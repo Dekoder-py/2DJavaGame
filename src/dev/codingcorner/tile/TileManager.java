@@ -21,10 +21,10 @@ public class TileManager {
         this.gp = gp;
 
         tiles = new Tile[10];
-        mapTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
+        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
-        loadMap("/maps/map01.txt");
+        loadMap("/maps/TileMap.csv");
     }
 
     public void getTileImage() {
@@ -45,9 +45,6 @@ public class TileManager {
     }
 
     public void loadMap(String filePath) {
-
-        final int defaultTile = 0;
-
         try {
             InputStream is = getClass().getResourceAsStream(filePath);
 
@@ -57,69 +54,43 @@ public class TileManager {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
-            for (int row = 0; row < gp.maxScreenRow; row++) {
+            for (int row = 0; row < gp.maxWorldRow; row++) {
 
                 String line = br.readLine();
-
-                if (line == null) {
-                    for (int col = 0; col < gp.maxScreenCol; col++) {
-                        mapTileNum[col][row] = defaultTile;
-                    }
-                    continue;
-                }
-
                 line = line.trim();
-                if (line.isEmpty()) {
-                    for (int col = 0; col < gp.maxScreenCol; col++) {
-                        mapTileNum[col][row] = defaultTile;
-                    }
-                    continue;
-                }
+                String[] numbers = line.split(",");
 
-                String[] numbers = line.split("\\s+");
-
-                for (int col = 0; col < gp.maxScreenCol; col++) {
-
-                    int num = defaultTile;
-
-                    if (col < numbers.length) {
-                        try {
-                            num = Integer.parseInt(numbers[col]);
-                        } catch (NumberFormatException ignored) {
-                        }
-                    }
-
+                for (int col = 0; col < gp.maxWorldCol; col++) {
+                    int num = Integer.parseInt(numbers[col]);
                     mapTileNum[col][row] = num;
                 }
-
-
             }
-
-        } catch (Exception e) {
+        } catch (
+                Exception e) {
             e.printStackTrace();
         }
     }
 
     public void draw(Graphics2D g2) {
 
-        int col = 0;
-        int row = 0;
-        int x = 0;
-        int y = 0;
+        int worldCol = 0;
+        int worldRow = 0;
 
-        while (col < gp.maxScreenCol && row < gp.maxScreenRow) {
+        while (worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow) {
 
-            int tileNum = mapTileNum[col][row];
+            int tileNum = mapTileNum[worldCol][worldRow];
 
-            g2.drawImage(tiles[tileNum].image, x, y, gp.tileSize, gp.tileSize, null);
-            col++;
-            x += gp.tileSize;
+            int worldX = worldCol * gp.tileSize;
+            int worldY = worldRow * gp.tileSize;
+            int screenX = worldX - gp.player.worldX;
+            int screenY = worldY - gp.player.worldY;
 
-            if (col == gp.maxScreenCol) {
-                col = 0;
-                x = 0;
-                row++;
-                y += gp.tileSize;
+            g2.drawImage(tiles[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            worldCol++;
+
+            if (worldCol == gp.maxWorldCol) {
+                worldCol = 0;
+                worldRow++;
             }
         }
 

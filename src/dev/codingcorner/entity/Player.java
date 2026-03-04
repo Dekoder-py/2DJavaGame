@@ -13,10 +13,16 @@ public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
 
+    public final int screenX;
+    public final int screenY;
+
     public Player(GamePanel gp, KeyHandler keyH) {
 
         this.gp = gp;
         this.keyH = keyH;
+
+        screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
+        screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
 
         setDefaultValues();
         getPlayerImage();
@@ -25,8 +31,8 @@ public class Player extends Entity {
 
     public void setDefaultValues() {
 
-        x = 100;
-        y = 100;
+        worldX = 100;
+        worldY = 100;
         speed = 4;
     }
 
@@ -35,8 +41,9 @@ public class Player extends Entity {
         try {
             down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/down1.png")));
             down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/down2.png")));
-//            up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/up_1.png")));
-//            up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/up_2.png")));
+            up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/up1.png")));
+            up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/up2.png")));
+            up3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/up3.png")));
 //            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left_1.png")));
 //            left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left_2.png")));
 //            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right_1.png")));
@@ -49,29 +56,31 @@ public class Player extends Entity {
     public void update() {
 
         if (keyH.upPressed) {
-            y -= speed;
+            worldY -= speed;
             direction = "up";
         }
         if (keyH.downPressed) {
-            y += speed;
+            worldY += speed;
             direction = "down";
         }
         if (keyH.leftPressed) {
-            x -= speed;
+            worldX -= speed;
             direction = "left";
         }
         if (keyH.rightPressed) {
-            x += speed;
+            worldX += speed;
             direction = "right";
         }
 
         if (keyH.upPressed || keyH.downPressed || keyH.rightPressed || keyH.leftPressed)
             spriteCounter++;
 
-        if (spriteCounter > 12) {
+        if (spriteCounter > 6) {
             if (spriteNum == 1)
                 spriteNum = 2;
             else if (spriteNum == 2)
+                spriteNum = 3;
+            else if (spriteNum == 3)
                 spriteNum = 1;
             spriteCounter = 0;
         }
@@ -97,6 +106,9 @@ public class Player extends Entity {
                 if (spriteNum == 2) {
                     image = up2;
                 }
+                if (spriteNum == 3) {
+                    image = up3;
+                }
                 break;
             case "left":
                 if (spriteNum == 1) {
@@ -115,6 +127,6 @@ public class Player extends Entity {
                 }
                 break;
         }
-        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
     }
 }
