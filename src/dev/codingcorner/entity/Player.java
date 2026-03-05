@@ -31,8 +31,8 @@ public class Player extends Entity {
 
     public void setDefaultValues() {
 
-        worldX = 100;
-        worldY = 100;
+        worldX = 23 * gp.tileSize;
+        worldY = 21 * gp.tileSize;
         speed = 4;
     }
 
@@ -45,12 +45,12 @@ public class Player extends Entity {
             up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/up1.png")));
             up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/up2.png")));
             up3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/up3.png")));
-//            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left1.png")));
-//            left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left2.png")));
-//            left3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left3.png")));
-//            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right1.png")));
-//            right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right2.png")));
-//            right3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right3.png")));
+            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left1.png")));
+            left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left2.png")));
+            left3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left3.png")));
+            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right1.png")));
+            right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right2.png")));
+            right3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right3.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,14 +58,6 @@ public class Player extends Entity {
 
     public void update() {
 
-        if (keyH.upPressed) {
-            worldY -= speed;
-            direction = "up";
-        }
-        if (keyH.downPressed) {
-            worldY += speed;
-            direction = "down";
-        }
         if (keyH.leftPressed) {
             worldX -= speed;
             direction = "left";
@@ -73,6 +65,14 @@ public class Player extends Entity {
         if (keyH.rightPressed) {
             worldX += speed;
             direction = "right";
+        }
+        if (keyH.upPressed) {
+            worldY -= speed;
+            direction = "up";
+        }
+        if (keyH.downPressed) {
+            worldY += speed;
+            direction = "down";
         }
 
         if (keyH.upPressed || keyH.downPressed || keyH.rightPressed || keyH.leftPressed)
